@@ -1,0 +1,37 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  selenium:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+
+      - name: Lancio i test (Chrome senza finestra)
+        run: mvn -B test -Dheadless=true
+
+      - name: Screenshot dei test falliti
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: target/screenshots
+          if-no-files-found: ignore
+
+      - name: Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-surefire
+          path: target/surefire-reports
