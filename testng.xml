@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="SauceDemo">
+  <listeners>
+    <listener class-name="qa.base.ScreenshotListener"/>
+  </listeners>
+  <test name="Login, catalogo e checkout">
+    <classes>
+      <class name="qa.tests.LoginTest"/>
+      <class name="qa.tests.InventoryTest"/>
+      <class name="qa.tests.CheckoutTest"/>
+    </classes>
+  </test>
+</suite>
